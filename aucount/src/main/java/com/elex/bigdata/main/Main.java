@@ -17,6 +17,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        System.out.println(args.length + " - " + args[0]);
         if(args.length != 2){
             System.err.println("Usage : filename");
             System.exit(-1);
