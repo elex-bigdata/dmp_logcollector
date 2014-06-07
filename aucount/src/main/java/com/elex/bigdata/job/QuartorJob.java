@@ -82,13 +82,17 @@ public class QuartorJob implements Callable<Integer> {
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         for(String p : projects){
 
-            if(run(p) == 0){
-                System.out.println(node + " " + p + " success");
-            }else{
-                System.out.println(node + " " + p + " fail");
+            try {
+                if(run(p) == 0){
+                    System.out.println(node + " " + p + " success");
+                }else{
+                    System.out.println(node + " " + p + " fail");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return 1;
