@@ -32,7 +32,6 @@ public class CombinerJob{
     }
 
     public int run(String project) throws IOException, ClassNotFoundException, InterruptedException {
-        byte[] table = Bytes.toBytes("deu_" + project);
         Path outputpath = new Path("/user/hadoop/quartorcombine/" + project);
 
 
