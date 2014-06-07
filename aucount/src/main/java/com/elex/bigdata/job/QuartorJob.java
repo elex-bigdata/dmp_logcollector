@@ -30,10 +30,9 @@ import java.util.concurrent.Callable;
  */
 public class QuartorJob implements Callable<Integer> {
 
-    private byte[] table;
     private List<String> projects;
     private String node;
-    private Path outputpath;
+
 
     public QuartorJob(String node, List<String> projects){
         this.projects = projects;
@@ -41,8 +40,8 @@ public class QuartorJob implements Callable<Integer> {
     }
 
     public int run(String project) throws IOException, ClassNotFoundException, InterruptedException {
-        this.table = Bytes.toBytes("deu_" + project);
-        this.outputpath = new Path("/user/hadoop/quartorcount/" + node + "/" + project);
+        byte[] table = Bytes.toBytes("deu_" + project);
+        Path outputpath = new Path("/user/hadoop/quartorcount/" + node + "/" + project);
         Scan scan = new Scan();
         scan.setStopRow(Bytes.toBytes("20110101visit"));
         scan.setStopRow(Bytes.toBytes("20140101visit"));
@@ -70,7 +69,7 @@ public class QuartorJob implements Callable<Integer> {
             fs.delete(outputpath, true);
         }
 
-        FileOutputFormat.setOutputPath(job,this.outputpath);
+        FileOutputFormat.setOutputPath(job,outputpath);
 
 
         job.waitForCompletion(true);

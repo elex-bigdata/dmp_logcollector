@@ -35,6 +35,7 @@ public class Main {
         List<Future<Integer>> tasks = new ArrayList<Future<Integer>>();
         for(int i =0;i<16; i++){
             String nodename = "node" + i;
+
             tasks.add(service.submit(new QuartorJob(nodename, pjs)));
         }
 
