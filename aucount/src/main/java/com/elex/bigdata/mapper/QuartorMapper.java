@@ -50,8 +50,10 @@ public class QuartorMapper extends TableMapper<Text,IntWritable> {
         try{
             String m = Bytes.toStringBinary(Bytes.head(key.get(),6));
             String q = quartors.get(m);
-            String uid = Bytes.toStringBinary(Bytes.tail(key.get(),5));
-            context.write(new Text(q + uid),count);
+            if(q != null){
+                String uid = Bytes.toStringBinary(Bytes.tail(key.get(),5));
+                context.write(new Text(q + uid),count);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
