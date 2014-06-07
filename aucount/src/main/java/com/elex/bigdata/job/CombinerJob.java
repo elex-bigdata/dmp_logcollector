@@ -10,6 +10,7 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.FileInputStream;
@@ -45,6 +46,7 @@ public class CombinerJob{
         job.setMapperClass(CombineMapper.class);
         job.setCombinerClass(CombineReducer.class);
         job.setReducerClass(CombineReducer.class);
+        job.setInputFormatClass(TextInputFormat.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
 

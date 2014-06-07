@@ -20,12 +20,12 @@ import java.util.Map;
  * Date: 14-6-6
  * Time: 下午4:01
  */
-public class CombineMapper extends Mapper<LongWritable,Text,LongWritable,IntWritable>{
+public class CombineMapper extends Mapper<LongWritable,Text,Text,IntWritable>{
 
     private IntWritable count = new IntWritable(1);
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-        context.write(key,count);
+        context.write(value,count);
     }
 }

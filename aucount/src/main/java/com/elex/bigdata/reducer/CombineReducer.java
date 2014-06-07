@@ -14,10 +14,10 @@ import java.util.Iterator;
  * Date: 14-6-6
  * Time: 下午6:51
  */
-public class CombineReducer extends Reducer<LongWritable,IntWritable,LongWritable,IntWritable> {
+public class CombineReducer extends Reducer<Text,IntWritable,Text,IntWritable> {
 
     @Override
-    protected void reduce(LongWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+    protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
         Iterator<IntWritable> iter =  values.iterator();
 
         int count = 0;
