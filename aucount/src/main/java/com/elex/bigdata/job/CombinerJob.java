@@ -58,7 +58,10 @@ public class CombinerJob{
         FileOutputFormat.setOutputPath(job,outputpath);
         for(int i =0;i<16; i++){
             String nodename = "node" + i;
-            FileInputFormat.addInputPath(job,new Path("/user/hadoop/quartorcount/" + nodename + "/" + project));
+            Path p = new Path("/user/hadoop/quartorcount/" + nodename + "/" + project);
+            if(fs.exists(p)){
+                FileInputFormat.addInputPath(job,p);
+            }
         }
 
         job.waitForCompletion(true);
@@ -70,13 +73,17 @@ public class CombinerJob{
         }
     }
 
-    public Integer call() throws Exception {
+    public Integer call()  {
         for(String p : projects){
 
-            if(run(p) == 0){
-                System.out.println(" " + p + " success");
-            }else{
-                System.out.println(" " + p + " fail");
+            try {
+                if(run(p) == 0){
+                    System.out.println(" " + p + " success");
+                }else{
+                    System.out.println(" " + p + " fail");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return 1;

@@ -26,6 +26,8 @@ public class CombineMapper extends Mapper<LongWritable,Text,Text,IntWritable>{
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-        context.write(value,count);
+        if(value.toString().startsWith("2")){
+            context.write(value,count);
+        }
     }
 }
