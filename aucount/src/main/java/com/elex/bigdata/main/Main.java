@@ -2,7 +2,7 @@ package com.elex.bigdata.main;
 
 import com.elex.bigdata.job.QuartorJob;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -17,17 +17,25 @@ public class Main {
     public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException {
 
         if(args.length != 1){
-            System.err.println("Usage : project");
+            System.err.println("Usage : filename");
             System.exit(-1);
         }
 
-        String project = args[0];
+        String fpath = args[0];
+        File pfile = new File(fpath);
+        FileReader fr = new FileReader(pfile);
+        BufferedReader reader = new BufferedReader(fr);
+        String p = null;
+        List<String> pjs = new ArrayList<String>();
+        while((p = reader.readLine() )!=null){
+            pjs.add(p.trim());
+        }
+
         ExecutorService service = new ThreadPoolExecutor(16,16,60, TimeUnit.MILLISECONDS,new LinkedBlockingDeque<Runnable>());
-        System.out.println("project : " + project);
         List<Future<Integer>> tasks = new ArrayList<Future<Integer>>();
         for(int i =0;i<16; i++){
             String nodename = "node" + i;
-            tasks.add(service.submit(new QuartorJob(nodename, project)));
+            tasks.add(service.submit(new QuartorJob(nodename, pjs)));
         }
 
         for(Future f : tasks){

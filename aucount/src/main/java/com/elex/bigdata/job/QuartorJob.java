@@ -20,6 +20,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
@@ -30,24 +31,23 @@ import java.util.concurrent.Callable;
 public class QuartorJob implements Callable<Integer> {
 
     private byte[] table;
-    private String project;
+    private List<String> projects;
     private String node;
     private Path outputpath;
 
-    public QuartorJob(String node, String project){
-        this.table = Bytes.toBytes("deu_" + project);
-        this.project = project;
+    public QuartorJob(String node, List<String> projects){
+        this.projects = projects;
         this.node = node;
-        this.outputpath = new Path("/user/hadoop/quartorcount/" + node + "/" + project);
     }
 
-    public int run() throws IOException, ClassNotFoundException, InterruptedException {
-
+    public int run(String project) throws IOException, ClassNotFoundException, InterruptedException {
+        this.table = Bytes.toBytes("deu_" + project);
+        this.outputpath = new Path("/user/hadoop/quartorcount/" + node + "/" + project);
         Scan scan = new Scan();
         scan.setStopRow(Bytes.toBytes("20110101visit"));
         scan.setStopRow(Bytes.toBytes("20140101visit"));
         scan.setMaxVersions(1);
-        scan.setCaching(2000);
+        scan.setCaching(4000);
         scan.setFilter(new KeyOnlyFilter());
 
         Configuration conf = HBaseConfiguration.create();
@@ -84,6 +84,14 @@ public class QuartorJob implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        return run();
+        for(String p : projects){
+
+            if(run(p) == 0){
+                System.out.println(node + " " + p + " success");
+            }else{
+                System.out.println(node + " " + p + " fail");
+            }
+        }
+        return 1;
     }
 }
