@@ -43,7 +43,7 @@ public class QuartorJob implements Callable<Integer> {
         byte[] table = Bytes.toBytes("deu_" + project);
         Path outputpath = new Path("/user/hadoop/quartorcount/" + node + "/" + project);
         Scan scan = new Scan();
-        scan.setStopRow(Bytes.toBytes("20110101visit"));
+        scan.setStartRow(Bytes.toBytes("20110101visit"));
         scan.setStopRow(Bytes.toBytes("20140101visit"));
         scan.setMaxVersions(1);
         scan.setCaching(4000);
