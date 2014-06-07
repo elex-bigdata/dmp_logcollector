@@ -4,6 +4,7 @@ import com.elex.bigdata.mapper.QuartorMapper;
 import com.elex.bigdata.reducer.QuartorCombiner;
 import com.elex.bigdata.reducer.QuartorReducer;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.Scan;
@@ -18,6 +19,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 
 /**
  * Author: liqiang
@@ -59,6 +61,11 @@ public class QuartorJob {
         job.setReducerClass(QuartorReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(NullWritable.class);
+
+        FileSystem fs = FileSystem.get(conf);
+        if (fs.exists(outputpath)) {
+            fs.delete(outputpath, true);
+        }
 
         FileOutputFormat.setOutputPath(job,this.outputpath);
 
