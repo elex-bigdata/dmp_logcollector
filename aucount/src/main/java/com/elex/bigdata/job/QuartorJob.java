@@ -48,8 +48,9 @@ public class QuartorJob {
         Configuration conf = HBaseConfiguration.create();
         conf.set("hbase.zookeeper.quorum", node);
         conf.set("hbase.zookeeper.property.clientPort", "3181");
-        conf.set("mapred.map.child.java.opts","-Xmx256m") ;
-        conf.set("mapred.reduce.child.java.opts","-Xmx256m") ;
+        conf.set("mapred.child.java.opts", "-Xmx1024m");
+        conf.set("mapred.map.child.java.opts","-Xmx512m") ;
+        conf.set("mapred.reduce.child.java.opts","-Xmx512m") ;
 
         Job job = new Job(conf,node + "_" + project);
         job.setJarByClass(QuartorJob.class);
