@@ -45,6 +45,8 @@ public class QuartorJob {
         Scan scan = new Scan();
         scan.setStopRow(Bytes.toBytes("20110101visit"));
         scan.setStopRow(Bytes.toBytes("20140101visit"));
+        scan.setMaxVersions(1);
+        scan.setCaching(2000);
         scan.setFilter(new KeyOnlyFilter());
 
         Configuration conf = HBaseConfiguration.create();
