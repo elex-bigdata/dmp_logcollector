@@ -21,7 +21,7 @@ public class Main {
             System.exit(-1);
         }
 
-        String project = args[1];
+        String project = args[0];
         ExecutorService service = new ThreadPoolExecutor(16,16,60, TimeUnit.MILLISECONDS,new LinkedBlockingDeque<Runnable>());
         System.out.println("project : " + project);
         List<Future<Integer>> tasks = new ArrayList<Future<Integer>>();
