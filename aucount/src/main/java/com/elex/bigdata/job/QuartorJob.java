@@ -20,13 +20,14 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.util.concurrent.Callable;
 
 /**
  * Author: liqiang
  * Date: 14-6-7
  * Time: 上午10:35
  */
-public class QuartorJob {
+public class QuartorJob implements Callable<Integer> {
 
     private byte[] table;
     private String project;
@@ -81,4 +82,8 @@ public class QuartorJob {
         }
     }
 
+    @Override
+    public Integer call() throws Exception {
+        return run();
+    }
 }
