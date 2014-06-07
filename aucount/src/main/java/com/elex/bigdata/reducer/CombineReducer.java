@@ -1,6 +1,7 @@
 package com.elex.bigdata.reducer;
 
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -13,10 +14,10 @@ import java.util.Iterator;
  * Date: 14-6-6
  * Time: 下午6:51
  */
-public class CombineReducer extends Reducer<Text,IntWritable,Text,IntWritable> {
+public class CombineReducer extends Reducer<LongWritable,IntWritable,LongWritable,IntWritable> {
 
     @Override
-    protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+    protected void reduce(LongWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
         Iterator<IntWritable> iter =  values.iterator();
 
         int count = 0;

@@ -5,6 +5,7 @@ import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
 import org.apache.hadoop.hbase.mapreduce.TableMapper;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -19,12 +20,12 @@ import java.util.Map;
  * Date: 14-6-6
  * Time: 下午4:01
  */
-public class CombineMapper extends Mapper<Text,NullWritable,Text,IntWritable>{
+public class CombineMapper extends Mapper<LongWritable,NullWritable,LongWritable,IntWritable>{
 
     private IntWritable count = new IntWritable(1);
 
     @Override
-    protected void map(Text key, NullWritable value, Context context) throws IOException, InterruptedException {
+    protected void map(LongWritable key, NullWritable value, Context context) throws IOException, InterruptedException {
         context.write(key,count);
     }
 }
