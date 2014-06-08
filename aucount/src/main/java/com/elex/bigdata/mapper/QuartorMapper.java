@@ -18,11 +18,11 @@ import java.util.*;
  */
 public class QuartorMapper extends TableMapper<Text,IntWritable> {
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-    private Map<String,String> quartors = new LinkedHashMap<String,String>();
+//    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+//    private Map<String,String> quartors = new LinkedHashMap<String,String>();
 
     private IntWritable count = new IntWritable(1);
-    @Override
+/*    @Override
     protected void setup(Context context) throws IOException, InterruptedException {
 
         String[] years = new String[]{"2011","2012","2013"};
@@ -43,17 +43,19 @@ public class QuartorMapper extends TableMapper<Text,IntWritable> {
                 quartors.put(y+m , y + q);
             }
         }
-    }
+    }*/
 
     @Override
     protected void map(ImmutableBytesWritable key, Result value, Context context) throws IOException, InterruptedException {
         try{
             String m = Bytes.toStringBinary(Bytes.head(key.get(),6));
-            String q = quartors.get(m);
-            if(q != null){
+            //String q = quartors.get(m);
+            /*if(q != null){
                 String uid = Bytes.toStringBinary(Bytes.tail(key.get(),5));
                 context.write(new Text(q + uid),count);
-            }
+            }*/
+            String uid = Bytes.toStringBinary(Bytes.tail(key.get(),5));
+            context.write(new Text(m + uid),count);
         } catch (Exception e) {
             e.printStackTrace();
         }
