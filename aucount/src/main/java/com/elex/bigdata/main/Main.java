@@ -2,10 +2,11 @@ package com.elex.bigdata.main;
 
 import com.elex.bigdata.job.CombinerJob;
 import com.elex.bigdata.job.QuartorJob;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.*;
 
 /**
@@ -33,6 +34,7 @@ public class Main {
         while((p = reader.readLine() )!=null){
             pjs.add(p.trim());
         }
+        reader.close();
 
         if("count".equals(type)){
             ExecutorService service = new ThreadPoolExecutor(16,16,60, TimeUnit.MILLISECONDS,new LinkedBlockingDeque<Runnable>());
@@ -56,6 +58,46 @@ public class Main {
         }else if("combine".equals(type)){
             System.out.println("begin combine");
             new CombinerJob(pjs).call();
+        }else if("sum".equals(type)){
+
+            FileSystem fs = FileSystem.get(new Configuration());
+            Map<String,Map<String,String>> result = new LinkedHashMap<String,Map<String,String>>();
+            for(String pj : pjs){
+                Path path = new Path("/user/hadoop/quartorcombine/" + pj + "/part-r-00000");
+                if(fs.exists(path)){
+                    InputStream is = fs.open(path);
+                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                    Map<String,String> q = new LinkedHashMap<String, String>();
+                    q.put("201101","0");
+                    q.put("201102","0");
+                    q.put("201103","0");
+                    q.put("201104","0");
+                    q.put("201201","0");
+                    q.put("201202","0");
+                    q.put("201203","0");
+                    q.put("201204","0");
+                    q.put("201301","0");
+                    q.put("201302","0");
+                    q.put("201303","0");
+                    q.put("201304","0");
+                    String value = null;
+                    while((value = reader.readLine() )!=null){
+                        String[] qv = value.split("\t");
+                        q.put(qv[0],qv[1]);
+                    }
+                    result.put(pj, q);
+                }
+            }
+
+
+            for(Map.Entry<String,Map<String,String>> pv : result.entrySet()){
+                String line = pv.getKey() + ",";
+                for(Map.Entry<String,String> qv : pv.getValue().entrySet()){
+                    line += qv.getValue() + ",";
+                }
+                System.out.println(line);
+            }
+
         }
 
     }
