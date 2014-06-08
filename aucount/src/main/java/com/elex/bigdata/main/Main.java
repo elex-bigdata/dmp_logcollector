@@ -81,7 +81,7 @@ public class Main {
                     q.put("201303","0");
                     q.put("201304","0");
                     String value = null;
-                    while((value = reader.readLine() )!=null){
+                    while((value = br.readLine() )!=null){
                         String[] qv = value.split("\t");
                         q.put(qv[0],qv[1]);
                     }
