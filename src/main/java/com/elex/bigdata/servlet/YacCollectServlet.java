@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class YacCollectServlet extends HttpServlet {
 
-    public static String prefixPath = "e:/upload/";
+    public static String prefixPath = "/data/upload/";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -100,23 +100,7 @@ public class YacCollectServlet extends HttpServlet {
 
                     item.write( new File(path,filename) );//第三方提供的
 
-/*                    //手动写的
-                    OutputStream out = new FileOutputStream(new File(path,filename));
 
-                    InputStream in = item.getInputStream() ;
-
-                    int length = 0 ;
-                    byte [] buf = new byte[1024] ;
-
-                    System.out.println("获取上传文件的总共的容量："+item.getSize());
-
-                    // in.read(buf) 每次读到的数据存放在   buf 数组中
-                    while( (length = in.read(buf) ) != -1){
-                        out.write(buf, 0, length);
-                    }
-
-                    in.close();
-                    out.close();*/
                 }
             }
 
@@ -129,26 +113,7 @@ public class YacCollectServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-
-
-/*
-        ServletInputStream in = req.getInputStream();
-
-        byte buffer[]=new byte[1024];
-
-        FileOutputStream out=new FileOutputStream("d:\\test.log");
-
-        int len = 0;
-
-        while( (len = in.read(buffer, 0, 1024)) != -1 ){
-            out.write(buffer, 0, len);
-        }
-        out.close();
-        in.close();
-*/
-
-
-        resp.getWriter().write("okx");
+        resp.getWriter().write("ok");
 
     }
 }
