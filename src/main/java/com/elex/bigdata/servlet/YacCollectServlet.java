@@ -45,7 +45,8 @@ public class YacCollectServlet extends HttpServlet {
 
         String path = prefixPath + day;
         String decode = req.getParameter("ts");
-
+        String ip = req.getHeader("X-Forwarded-For") != null ? req.getHeader("X-Forwarded-For") : req.getRemoteAddr();
+        LOG.debug("IP : " + ip);
         LOG.debug("Decode : " + decode);
 
         File file = new File(path);
