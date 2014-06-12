@@ -4,6 +4,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +24,7 @@ import java.util.List;
 public class YacCollectServlet extends HttpServlet {
 
     public static String prefixPath = "/data/upload/";
+    public static final Log LOG = LogFactory.getLog(YacCollectServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,14 +46,14 @@ public class YacCollectServlet extends HttpServlet {
         String path = prefixPath + day;
         String decode = req.getParameter("ts");
 
-        System.out.println("Decode : " + decode);
+        LOG.debug("Decode : " + decode);
 
         File file = new File(path);
         if( !file.exists() || !file.isDirectory()){
             file.mkdir();
         }
-        System.out.println("Path : " + path);
 
+        LOG.debug("Path : " + path);
 
         //如果没以下两行设置的话，上传大的 文件 会占用 很多内存，
         //设置暂时存放的 存储室 , 这个存储室，可以和 最终存储文件 的目录不同
@@ -94,7 +97,7 @@ public class YacCollectServlet extends HttpServlet {
                     //截取 上传文件的 字符串名字，加1是 去掉反斜杠，
                     String filename = value.substring(start+1);
 
-
+                    LOG.debug("filename : " + filename);
                     //真正写到磁盘上
                     //它抛出的异常 用exception 捕捉
 
