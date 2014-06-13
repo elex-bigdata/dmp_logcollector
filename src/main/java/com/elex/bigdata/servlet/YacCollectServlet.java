@@ -41,6 +41,8 @@ public class YacCollectServlet extends HttpServlet {
             return;
         }
 
+        //TODO: 如果今天接收的数据量够多了，停止接收
+
         req.setCharacterEncoding("utf-8");  //设置编码
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
