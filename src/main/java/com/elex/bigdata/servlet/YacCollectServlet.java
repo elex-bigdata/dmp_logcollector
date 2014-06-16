@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class YacCollectServlet extends HttpServlet {
 
-    public static String prefixPath = "/data/log/";
+    public static String prefixPath = "/data/log/yac/";
     public static final Log LOG = LogFactory.getLog(YacCollectServlet.class);
 
     @Override

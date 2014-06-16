@@ -1,6 +1,6 @@
 #!/bin/sh
 
-logdir=/data/log/$(date -d"-5 mins" +"%Y%m%d")/
+logdir=/data/log/yac/$(date -d"-5 mins" +"%Y%m%d")/
 
 limit=20971520 #暂定每天日志上限20G左右
 size=`du -s /data/upload/ | awk '{print $1}'`
