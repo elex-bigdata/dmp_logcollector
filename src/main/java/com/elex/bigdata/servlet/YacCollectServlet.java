@@ -43,25 +43,26 @@ public class YacCollectServlet extends HttpServlet {
 
         //TODO: 如果今天接收的数据量够多了，停止接收
 
-        req.setCharacterEncoding("utf-8");  //设置编码
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        String day = sdf.format(new Date());
-        String path = prefixPath + day;
-
-        String ip = req.getHeader("X-Forwarded-For") != null ? req.getHeader("X-Forwarded-For") : req.getRemoteAddr();
-        //TODO；存IP
-        File file = new File(path);
-        if( !file.exists() || !file.isDirectory()){
-            file.mkdir();
-        }
-
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        factory.setRepository(new File(path));
-        factory.setSizeThreshold(1024*1024) ;
-
-        ServletFileUpload upload = new ServletFileUpload(factory);
         try {
+            req.setCharacterEncoding("utf-8");  //设置编码
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            String day = sdf.format(new Date());
+            String path = prefixPath + day;
+
+            String ip = req.getHeader("X-Forwarded-For") != null ? req.getHeader("X-Forwarded-For") : req.getRemoteAddr();
+            //TODO；存IP
+            File file = new File(path);
+            if( !file.isDirectory()){
+                file.mkdirs();
+            }
+
+            DiskFileItemFactory factory = new DiskFileItemFactory();
+            factory.setRepository(new File(path));
+            factory.setSizeThreshold(1024*1024) ;
+
+            ServletFileUpload upload = new ServletFileUpload(factory);
+
             //可以上传多个文件
             List<FileItem> list = (List<FileItem>)upload.parseRequest(req);
             for(FileItem item : list){
@@ -74,7 +75,7 @@ public class YacCollectServlet extends HttpServlet {
                     String sed = decode.substring(decode.length() - 4);
                     LOG.debug("filename : " + filename + "， IP : " + ip + "， Seed : " + sed + ", size :" + item.getSize());
 
-                    OutputStream out = new FileOutputStream(new File(path,sed + "_" + filename));
+                    OutputStream out = new FileOutputStream(new File(path,filename));
                     InputStream in = item.getInputStream() ;
 
                     int length = 0 ;
