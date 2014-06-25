@@ -2,8 +2,8 @@
 
 logdir=/data/log/yac/$(date -d"-5 mins" +"%Y%m%d")/
 
-limit=20971520 #暂定每天日志上限20G左右
-size=`du -s /data/upload/ | awk '{print $1}'`
+limit=41943040 #暂定每天日志上限40G左右
+size=`du -s ${logdir} | awk '{print $1}'`
 
 for f in `find ${logdir} -name *.zip`
 do
