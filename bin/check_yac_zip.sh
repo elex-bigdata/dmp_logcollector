@@ -1,7 +1,7 @@
 #!/bin/sh
 
 logdir=/data/log/yac/$(date -d"-5 mins" +"%Y%m%d")/
-hour=$(`date -d"-5 mins" +"%H"`)
+hour=$(date -d"-5 mins" +"%H")
 
 limit=4194304 #暂定每小时日志上限40G左右
 size=`du -s ${logdir}*_${hour}.dat | awk '{sum+=$1;}END{print sum}'`
