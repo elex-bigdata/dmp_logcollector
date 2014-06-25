@@ -13,7 +13,7 @@ do
   else
     echo "Unzip and remove file ${f}"
     `unzip -o ${f} -d ${logdir}`
-    `mv ${f%.*}.dat ${file%.*}_${hour}.dat`
+    `mv ${f%.*}.dat ${f%.*}_${hour}.dat`
   fi
   `rm -f ${f}`
 done
