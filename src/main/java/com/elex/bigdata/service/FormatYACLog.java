@@ -50,7 +50,6 @@ public class FormatYACLog implements Callable<String>{
                     String url = line.split(YACConstants.LOG_ATTR_SEPRATOR)[1];
 
                     if(DMUtils.validateURL(url)){
-                        System.out.println(firstLine + "\t" + line);
                         //uid  ip nation ts url title 网站语言 metainfo 停留时间
                         StringBuffer sb = new StringBuffer(firstLine);
                         sb.append(YACConstants.LOG_ATTR_SEPRATOR);
@@ -91,7 +90,7 @@ public class FormatYACLog implements Callable<String>{
             LOG.warn("unzip " + filePath + " " + e.getMessage());
         }
 
-        new File(filePath).delete(); //删除
+        //new File(filePath).delete(); //删除
         return YACConstants.unzip_path + "/" + fileName + ".dat";
     }
 
