@@ -1,6 +1,7 @@
 package com.elex.bigdata.servlet;
 
 import com.elex.bigdata.util.DMUtils;
+import com.elex.bigdata.util.YACConstants;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -24,7 +25,6 @@ import java.util.List;
  */
 public class YacCollectServlet extends HttpServlet {
 
-    public static String prefixPath = "/data/log/yac/";
     public static final Log LOG = LogFactory.getLog(YacCollectServlet.class);
 
     @Override
@@ -46,9 +46,9 @@ public class YacCollectServlet extends HttpServlet {
         try {
             req.setCharacterEncoding("utf-8");  //设置编码
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-            String day = sdf.format(new Date());
-            String path = prefixPath + day;
+            /*SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            String day = sdf.format(new Date());*/
+            String path = YACConstants.upload_dir_path;
 
             String ip = req.getHeader("X-Forwarded-For") != null ? req.getHeader("X-Forwarded-For") : req.getRemoteAddr();
             //TODO；存IP
@@ -93,6 +93,7 @@ public class YacCollectServlet extends HttpServlet {
 
                     in.close();
                     out.close();
+                    YACConstants.FILENAME_QUEUE.add(path + "/" + filename);
                 }
             }
             resp.getWriter().write("{'status':'success','msg':''}");

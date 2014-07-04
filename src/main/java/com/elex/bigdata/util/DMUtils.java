@@ -28,4 +28,8 @@ public class DMUtils {
     public static byte[] intToByteArray(int a){
         return new byte[] { (byte) ((a >> 24) & 0xFF), (byte) ((a >> 16) & 0xFF), (byte) ((a >> 8) & 0xFF), (byte) (a & 0xFF) };
     }
+
+    public static boolean validateURL(String url) {
+        return url.length() < 1000 && !YACConstants.URL_FILTER_PATTERN.matcher(url).matches() ;
+    }
 }
