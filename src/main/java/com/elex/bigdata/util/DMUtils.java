@@ -32,7 +32,7 @@ public class DMUtils {
     }
 
     public static boolean validateURL(String url) {
-        return url.length() < 1000 && !YACConstants.URL_FILTER_PATTERN.matcher(url).matches() ;
+        return url.length() < 800 && !YACConstants.URL_FILTER_PATTERN.matcher(url).matches() ;
     }
 
     public static List<String> split(String line, String sep) {
