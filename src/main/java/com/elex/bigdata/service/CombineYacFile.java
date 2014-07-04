@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public class CombineYacFile implements Runnable {
 
-    private static int maxLineNum = 5000000;
+    private static int maxLineNum = 1000000;
     private static SimpleDateFormat day_sdf = new SimpleDateFormat("yyyyMMdd");
     private static SimpleDateFormat sec_sdf = new SimpleDateFormat("HHmmss");
 
