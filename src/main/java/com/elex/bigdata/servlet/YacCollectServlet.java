@@ -48,7 +48,7 @@ public class YacCollectServlet extends HttpServlet {
 
             /*SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             String day = sdf.format(new Date());*/
-            String path = YACConstants.upload_dir_path;
+            String path = YACConstants.log_dir_path;
 
             String ip = req.getHeader("X-Forwarded-For") != null ? req.getHeader("X-Forwarded-For") : req.getRemoteAddr();
             //TODO；存IP
@@ -93,7 +93,7 @@ public class YacCollectServlet extends HttpServlet {
 
                     in.close();
                     out.close();
-                    YACConstants.FILENAME_QUEUE.add(path + "/" + filename);
+//                    YACConstants.FILENAME_QUEUE.add(path + "/" + filename);
                 }
             }
             resp.getWriter().write("{'status':'success','msg':''}");
