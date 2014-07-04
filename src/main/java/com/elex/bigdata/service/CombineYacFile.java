@@ -17,7 +17,7 @@ public class CombineYacFile implements Runnable {
 
     private static int maxLineNum = 5000000;
     private static SimpleDateFormat day_sdf = new SimpleDateFormat("yyyyMMdd");
-    private static SimpleDateFormat sec_sdf = new SimpleDateFormat("hhmmss");
+    private static SimpleDateFormat sec_sdf = new SimpleDateFormat("HHmmss");
 
     private FileOutputStream out = null;
     private OutputStreamWriter writer = null;
