@@ -66,7 +66,7 @@ public class FormatYACLog implements Callable<String>{
             LOG.debug("Delete file " + filePath);
             new File(filePath).delete();
         }catch (Exception e){
-            e.printStackTrace(); //暂时不理会错误
+            LOG.warn("Error while process " + zipfilePath + " " + e.getMessage()); //暂时不理会错误
             return "fail";
         }finally {
             if(reader != null){
@@ -94,7 +94,6 @@ public class FormatYACLog implements Callable<String>{
         String fileName = zipFile.getName().substring(0, zipFile.getName().indexOf(".")); 
         String shellCommand = "unzip -o "+ filePath +" -d " + YACConstants.unzip_path;
         String[] cmd = {"/bin/sh", "-c", shellCommand};
-        //执行Shell命令
         Process pid = Runtime.getRuntime().exec(cmd);
         pid.waitFor();
 
