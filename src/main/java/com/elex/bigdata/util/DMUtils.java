@@ -1,6 +1,8 @@
 package com.elex.bigdata.util;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Author: liqiang
@@ -31,5 +33,16 @@ public class DMUtils {
 
     public static boolean validateURL(String url) {
         return url.length() < 1000 && !YACConstants.URL_FILTER_PATTERN.matcher(url).matches() ;
+    }
+
+    public static List<String> split(String line, String sep) {
+        List<String> attrs = new ArrayList<String>();
+        int pos = 0, end;
+        while ((end = line.indexOf(sep, pos)) >= 0) {
+            attrs.add(line.substring(pos, end));
+            pos = end + sep.length();
+        }
+        attrs.add(line.substring(pos)); //最后一个
+        return attrs;
     }
 }

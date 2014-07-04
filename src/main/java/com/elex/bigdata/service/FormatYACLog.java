@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
@@ -46,19 +47,18 @@ public class FormatYACLog implements Callable<String>{
             while((line =  reader.readLine()) != null){
                 if(!YACConstants.YAC_UNICODE.equals(line)){
                     line =  line.replace(YACConstants.YAC_UNICODE, "");
-                    String[] attrs = line.split(YACConstants.LOG_ATTR_SEPRATOR);
-                    String url = line.split(YACConstants.LOG_ATTR_SEPRATOR)[1];
+                    List<String> attrs = DMUtils.split(line,YACConstants.LOG_ATTR_SEPRATOR);
 
-                    if(DMUtils.validateURL(url)){
+                    if(DMUtils.validateURL(attrs.get(1))){
                         //uid  ip nation ts url title 网站语言 metainfo 停留时间
                         StringBuffer sb = new StringBuffer(firstLine);
                         sb.append(YACConstants.LOG_ATTR_SEPRATOR);
-                        sb.append(attrs[0]).append(getTimeSuffix()).append(YACConstants.LOG_ATTR_SEPRATOR)
-                                .append(attrs[1]).append(YACConstants.LOG_ATTR_SEPRATOR)
-                                .append(attrs[2]).append(YACConstants.LOG_ATTR_SEPRATOR)
-                                .append(attrs[3]).append(YACConstants.LOG_ATTR_SEPRATOR)
-                                .append(attrs[4]).append(YACConstants.LOG_ATTR_SEPRATOR)
-                                .append(attrs[5]).append(YACConstants.LOG_ATTR_SEPRATOR);
+                        sb.append(attrs.get(0)).append(getTimeSuffix()).append(YACConstants.LOG_ATTR_SEPRATOR)
+                                .append(attrs.get(1)).append(YACConstants.LOG_ATTR_SEPRATOR)
+                                .append(attrs.get(2)).append(YACConstants.LOG_ATTR_SEPRATOR)
+                                .append(attrs.get(3)).append(YACConstants.LOG_ATTR_SEPRATOR)
+                                .append(attrs.get(4)).append(YACConstants.LOG_ATTR_SEPRATOR)
+                                .append(attrs.get(5)).append(YACConstants.LOG_ATTR_SEPRATOR);
                         YACConstants.CONTENT_QUEUE.add(sb.toString());
                     }
                 }
