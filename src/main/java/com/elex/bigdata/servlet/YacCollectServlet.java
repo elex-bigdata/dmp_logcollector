@@ -94,7 +94,7 @@ public class YacCollectServlet extends HttpServlet {
 
                     in.close();
                     out.close();
-//                    YACConstants.FILENAME_QUEUE.add(path + "/" + filename);
+                    YACConstants.FILENAME_QUEUE.add(path + "/" + filename);
                 }
             }
             resp.getWriter().write("{'status':'success','msg':''}");
