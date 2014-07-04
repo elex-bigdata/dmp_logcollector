@@ -16,4 +16,10 @@
         <url-pattern>/upload</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>InitServlet</servlet-name>
+        <servlet-class>com.elex.bigdata.servlet.InitServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
 </web-app>
