@@ -20,7 +20,8 @@ public class YACConstants {
 
     public static final String log_dir_path = "/data/log/yac/";
 
-    public static String URL_FILTER_REG = ".*\\.(gif|GIF|jpg|JPG|png|PNG|ico|ICO|css|CSS|sit|SIT|eps|EPS|wmf|WMF|zip|ZIP|ppt|PPT|mpg|MPG|xls|XLS|gz|GZ|rpm|RPM|tgz|TGZ|mov|MOV|exe|EXE|jpeg|JPEG|bmp|BMP|js|JS)$";
+    public static final String url_filter_suffix = "gif|GIF|jpg|JPG|png|PNG|ico|ICO|css|CSS|sit|SIT|eps|EPS|wmf|WMF|zip|ZIP|ppt|PPT|mpg|MPG|xls|XLS|gz|GZ|rpm|RPM|tgz|TGZ|mov|MOV|exe|EXE|jpeg|JPEG|bmp|BMP|js|JS|jxr";
+    public static String URL_FILTER_REG = ".*\\.("+url_filter_suffix+")(\\?.*|$)";
 
     public static Pattern URL_FILTER_PATTERN = Pattern.compile(URL_FILTER_REG);
 
