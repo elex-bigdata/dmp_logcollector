@@ -34,7 +34,7 @@ public class CombineYacFile implements Runnable {
                     bw.write(line);
                     bw.newLine();
                     num++;
-                    if((num % 1000) == 0){
+                    if((num % 5000) == 0){
                         bw.flush();
                     }
                 }catch (Exception e){
