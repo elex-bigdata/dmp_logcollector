@@ -85,7 +85,12 @@ public class FormatYACLog implements Callable<String>{
         ZipFile zipFile = new ZipFile(filePath);
         String zipFileName = zipFile.getFile().getName();
         String fileName = zipFileName.substring(0,zipFileName.indexOf("."));
-        zipFile.extractAll(YACConstants.unzip_path);
+        try{
+            zipFile.extractAll(YACConstants.unzip_path);
+        }catch (Exception e){
+            LOG.warn("unzip " + filePath + " " + e.getMessage());
+        }
+
         new File(filePath).delete(); //删除
         return YACConstants.unzip_path + "/" + fileName + ".dat";
     }

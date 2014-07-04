@@ -46,10 +46,11 @@ public class YacCollectServlet extends HttpServlet {
         try {
             req.setCharacterEncoding("utf-8");  //设置编码
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            /*SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             String day = sdf.format(new Date());
-            String path = YACConstants.log_dir_path + day;
+            String path = YACConstants.log_dir_path + day;*/
 
+            String path = YACConstants.upload_dir_path;
             String ip = req.getHeader("X-Forwarded-For") != null ? req.getHeader("X-Forwarded-For") : req.getRemoteAddr();
             //TODO；存IP
             File file = new File(path);

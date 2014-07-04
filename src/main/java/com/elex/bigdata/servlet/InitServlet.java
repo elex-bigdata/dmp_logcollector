@@ -17,9 +17,9 @@ public class InitServlet extends HttpServlet {
     public void init() throws ServletException {
         System.out.println("----init----");
 
-/*        Thread combineYac = new Thread(new CombineYacFile());
+        Thread combineYac = new Thread(new CombineYacFile());
         combineYac.start();
         Thread checkYac = new Thread(new CheckYacZipFile());
-        checkYac.start();*/
+        checkYac.start();
     }
 }
