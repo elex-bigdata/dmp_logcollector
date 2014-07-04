@@ -97,7 +97,7 @@ public class FormatYACLog implements Callable<String>{
         Process pid = Runtime.getRuntime().exec(cmd);
         pid.waitFor();
 
-        //new File(filePath).delete(); //删除
+        new File(filePath).delete(); //删除
         return YACConstants.unzip_path + "/" + fileName + ".dat";
     }
 
