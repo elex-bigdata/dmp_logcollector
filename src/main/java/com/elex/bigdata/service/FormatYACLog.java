@@ -81,14 +81,22 @@ public class FormatYACLog implements Callable<String>{
     }
 
     public String unzipFile(String filePath) throws Exception{
-        ZipFile zipFile = new ZipFile(filePath);
+/*        ZipFile zipFile = new ZipFile(filePath);
         String zipFileName = zipFile.getFile().getName();
         String fileName = zipFileName.substring(0,zipFileName.indexOf("."));
         try{
             zipFile.extractAll(YACConstants.unzip_path);
         }catch (Exception e){
             LOG.warn("unzip " + filePath + " " + e.getMessage());
-        }
+        }*/
+
+        File zipFile = new File(filePath);
+        String fileName = zipFile.getName().substring(0, zipFile.getName().indexOf(".")); 
+        String shellCommand = "unzip -o "+ filePath +" -d " + YACConstants.unzip_path;
+        String[] cmd = {"/bin/sh", "-c", shellCommand};
+        //执行Shell命令
+        Process pid = Runtime.getRuntime().exec(cmd);
+        pid.waitFor();
 
         //new File(filePath).delete(); //删除
         return YACConstants.unzip_path + "/" + fileName + ".dat";
