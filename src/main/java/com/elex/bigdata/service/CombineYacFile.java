@@ -55,9 +55,12 @@ public class CombineYacFile implements Runnable {
         }
     }
 
-    public String getFilePath(){
+    public String getFilePath(boolean tmp){
         Date date = new Date();
-        return YACConstants.log_dir_path + day_sdf.format(date) + "/" + sec_sdf.format(date) + ".combing";
+        if(tmp){
+            return YACConstants.log_dir_path + day_sdf.format(date) + "/" + sec_sdf.format(date) + ".combing";
+        }
+        return YACConstants.log_dir_path + day_sdf.format(date) + "/" + sec_sdf.format(date) + ".log";
     }
 
     public void setWriter(){
@@ -65,11 +68,10 @@ public class CombineYacFile implements Runnable {
         closeWriter();
 
         if(file!= null && file.exists()){
-            String renamePath = file.getAbsolutePath().replace("combing","log");
-            file.renameTo(new File(renamePath));
+            file.renameTo(new File(getFilePath(false)));
         }
 
-        file = new File(getFilePath());
+        file = new File(getFilePath(true));
         file.getParentFile().mkdirs();
 
         try {
