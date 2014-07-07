@@ -64,7 +64,7 @@ public class CombineYacFile implements Runnable {
 
         closeWriter();
 
-        if(file.exists()){
+        if(file!= null && file.exists()){
             String renamePath = file.getAbsolutePath().replace("combing","log");
             file.renameTo(new File(renamePath));
         }
