@@ -64,21 +64,14 @@ public class CombineYacFile implements Runnable {
         closeWriter();
 
         File file = new File(getFilePath());
-        if(file == null || !file.exists()){
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        file.getParentFile().mkdirs();
+
         try {
             out = new FileOutputStream(file, true);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        if( !file.isDirectory()){
-            file.mkdirs();
-        }
+
         writer = new OutputStreamWriter(out);
         bw = new BufferedWriter(writer);
     }
