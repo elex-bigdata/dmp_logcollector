@@ -15,13 +15,14 @@ import java.util.Date;
  */
 public class CombineYacFile implements Runnable {
 
-    private static int maxLineNum = 1000000;
+    private static int maxLineNum = 500000;
     private static SimpleDateFormat day_sdf = new SimpleDateFormat("yyyyMMdd");
     private static SimpleDateFormat sec_sdf = new SimpleDateFormat("HHmmss");
 
     private FileOutputStream out = null;
     private OutputStreamWriter writer = null;
     private BufferedWriter bw = null;
+    private File file = null;
 
     @Override
     public void run() {
@@ -56,14 +57,19 @@ public class CombineYacFile implements Runnable {
 
     public String getFilePath(){
         Date date = new Date();
-        return YACConstants.log_dir_path + day_sdf.format(date) + "/" + sec_sdf.format(date) + ".log";
+        return YACConstants.log_dir_path + day_sdf.format(date) + "/" + sec_sdf.format(date) + ".combing";
     }
 
     public void setWriter(){
 
         closeWriter();
 
-        File file = new File(getFilePath());
+        if(file.exists()){
+            String renamePath = file.getAbsolutePath().replace("combing","log");
+            file.renameTo(new File(renamePath));
+        }
+
+        file = new File(getFilePath());
         file.getParentFile().mkdirs();
 
         try {
