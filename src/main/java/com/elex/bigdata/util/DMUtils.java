@@ -35,6 +35,10 @@ public class DMUtils {
         return url.length() < 500 && !YACConstants.URL_FILTER_PATTERN.matcher(url).matches() ;
     }
 
+    public static boolean checkURL(String url) {
+        return !YACConstants.URL_DOUBT_PATTERN.matcher(url).matches() ;
+    }
+
     public static List<String> split(String line, String sep) {
         List<String> attrs = new ArrayList<String>();
         int pos = 0, end;

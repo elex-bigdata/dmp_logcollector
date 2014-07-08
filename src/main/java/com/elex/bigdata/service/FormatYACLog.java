@@ -21,6 +21,8 @@ import java.util.concurrent.Callable;
  */
 public class FormatYACLog implements Callable<String>{
     public static final Log LOG = LogFactory.getLog(FormatYACLog.class);
+    public static final Log LOG_INVALID = LogFactory.getLog("invalid_url");
+    public static final Log LOG_DOUBT = LogFactory.getLog("doubt_url");
     private static Random random = new Random();
     private String zipfilePath;
 
@@ -50,6 +52,11 @@ public class FormatYACLog implements Callable<String>{
                     List<String> attrs = DMUtils.split(line,YACConstants.LOG_ATTR_SEPRATOR);
 
                     if(DMUtils.validateURL(attrs.get(1))){
+
+                        if(!DMUtils.checkURL(attrs.get(1))){
+                            LOG_DOUBT.debug(attrs.get(1));
+                        }
+
                         //uid  ip nation ts url title 网站语言 metainfo 停留时间
                         StringBuffer sb = new StringBuffer(firstLine);
                         sb.append(YACConstants.LOG_ATTR_SEPRATOR);
@@ -60,6 +67,10 @@ public class FormatYACLog implements Callable<String>{
                                 .append(attrs.get(4)).append(YACConstants.LOG_ATTR_SEPRATOR)
                                 .append(attrs.get(5)).append(YACConstants.LOG_ATTR_SEPRATOR);
                         YACConstants.CONTENT_QUEUE.add(sb.toString());
+                    }else{
+                        if(attrs.get(1).length() < 500){
+                            LOG_INVALID.debug(attrs.get(1));
+                        }
                     }
                 }
             }
@@ -90,6 +101,7 @@ public class FormatYACLog implements Callable<String>{
             LOG.warn("unzip " + filePath + " " + e.getMessage());
         }*/
 
+        //API解压有问题，直接调用系统unzip
         File zipFile = new File(filePath);
         String fileName = zipFile.getName().substring(0, zipFile.getName().indexOf(".")); 
         String shellCommand = "unzip -o "+ filePath +" -d " + YACConstants.unzip_path;
