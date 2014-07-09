@@ -52,10 +52,10 @@ public class FormatYACLog implements Callable<String>{
                     List<String> attrs = DMUtils.split(line,YACConstants.LOG_ATTR_SEPRATOR);
 
                     if(DMUtils.validateURL(attrs.get(1))){
-
+/*
                         if(!DMUtils.checkURL(attrs.get(1))){
                             LOG_DOUBT.debug(attrs.get(1));
-                        }
+                        }*/
 
                         //uid  ip nation ts url title 网站语言 metainfo 停留时间
                         StringBuffer sb = new StringBuffer(firstLine);
