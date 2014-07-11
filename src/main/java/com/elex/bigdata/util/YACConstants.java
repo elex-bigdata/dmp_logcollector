@@ -20,7 +20,7 @@ public class YACConstants {
 
     public static final String log_dir_path = "/data/log/yac/";
 
-    public static final String url_filter_keywords = "callback=|crossdomain\\.xml|google-analytics|ad\\.|ads\\.|ad2\\.|\\.ad|192\\.168\\.|ajax|api|image|favicon|\\.doubleclick|s\\.youtube\\.com|&async=|=async&|livetr\\.gostream\\.nl";
+    public static final String url_filter_keywords = "callback=|crossdomain\\.xml|=http|google-analytics|ad\\.|ads\\.|ad2\\.|\\.ad|192\\.168\\.|ajax|api|image|favicon|\\.doubleclick|s\\.youtube\\.com|&async=|=async&|livetr\\.gostream\\.nl";
     public static final String url_filter_suffix = "gif|GIF|jpg|JPG|png|PNG|ico|ICO|css|flv|CSS|sit|SIT|eps|EPS|wmf|WMF|zip|ZIP|ppt|PPT|mpg|MPG|xls|XLS|gz|GZ|rpm|RPM|tgz|TGZ|mov|MOV|exe|EXE|jpeg|JPEG|bmp|BMP|js|JS|jxr|f3d|woff|svg|AMF|amf";
 
     public static String URL_FILTER_REG = ".*(("+url_filter_keywords+")|(\\.("+url_filter_suffix+"))).*";
