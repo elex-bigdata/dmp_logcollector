@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Author: liqiang
@@ -22,6 +23,7 @@ import java.util.List;
  */
 public class YacCollectServlet extends HttpServlet {
 
+    private static Random random = new Random();
     public static final Log LOG = LogFactory.getLog(YacCollectServlet.class);
 
     @Override
@@ -68,7 +70,8 @@ public class YacCollectServlet extends HttpServlet {
                 if(!item.isFormField()){
 
                     String value = item.getName() ;
-                    String filename = value.substring(value.lastIndexOf("\\")+1);
+                    int prefix = random.nextInt(9999);
+                    String filename = prefix + "_" + value.substring(value.lastIndexOf("\\")+1);
 
                     String sed = decode.substring(decode.length() - 4);
                     LOG.debug("filename : " + filename + "， IP : " + ip + "， Seed : " + sed + ", size :" + item.getSize());

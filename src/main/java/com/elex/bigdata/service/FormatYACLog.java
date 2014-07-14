@@ -52,11 +52,6 @@ public class FormatYACLog implements Callable<String>{
                     List<String> attrs = DMUtils.split(line,YACConstants.LOG_ATTR_SEPRATOR);
 
                     if(DMUtils.validateURL(attrs.get(1))){
-/*
-                        if(!DMUtils.checkURL(attrs.get(1))){
-                            LOG_DOUBT.debug(attrs.get(1));
-                        }*/
-
                         //uid  ip nation ts url title 网站语言 metainfo 停留时间
                         StringBuffer sb = new StringBuffer(firstLine);
                         sb.append(YACConstants.LOG_ATTR_SEPRATOR);
@@ -103,14 +98,15 @@ public class FormatYACLog implements Callable<String>{
 
         //API解压有问题，直接调用系统unzip
         File zipFile = new File(filePath);
-        String fileName = zipFile.getName().substring(0, zipFile.getName().indexOf(".")); 
-        String shellCommand = "unzip -o "+ filePath +" -d " + YACConstants.unzip_path;
+        String fileName = zipFile.getName().substring(0, zipFile.getName().indexOf("."));
+        String fullDatPath = YACConstants.unzip_path+"/" + fileName + ".dat";
+        String shellCommand = "unzip -oqc "+ filePath +" > " + fullDatPath;
         String[] cmd = {"/bin/sh", "-c", shellCommand};
         Process pid = Runtime.getRuntime().exec(cmd);
         pid.waitFor();
 
         new File(filePath).delete(); //删除
-        return YACConstants.unzip_path + "/" + fileName + ".dat";
+        return fullDatPath;
     }
 
     public String getTimeSuffix(){
