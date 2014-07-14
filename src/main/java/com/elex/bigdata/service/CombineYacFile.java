@@ -68,7 +68,9 @@ public class CombineYacFile implements Runnable {
         closeWriter();
 
         if(file!= null && file.exists()){
-            file.renameTo(new File(getFilePath(false)));
+            File dest = new File(getFilePath(false));
+            dest.getParentFile().mkdirs(); //跨天
+            file.renameTo(dest);
         }
 
         file = new File(getFilePath(true));
