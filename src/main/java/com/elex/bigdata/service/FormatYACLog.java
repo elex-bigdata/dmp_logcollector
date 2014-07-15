@@ -48,24 +48,28 @@ public class FormatYACLog implements Callable<String>{
 
             while((line =  reader.readLine()) != null){
                 if(!YACConstants.YAC_UNICODE.equals(line)){
-                    line =  line.replace(YACConstants.YAC_UNICODE, "");
-                    List<String> attrs = DMUtils.split(line,YACConstants.LOG_ATTR_SEPRATOR);
+                    try{
+                        line =  line.replace(YACConstants.YAC_UNICODE, "");
+                        List<String> attrs = DMUtils.split(line,YACConstants.LOG_ATTR_SEPRATOR);
 
-                    if(DMUtils.validateURL(attrs.get(1))){
-                        //uid  ip nation ts url title 网站语言 metainfo 停留时间
-                        StringBuffer sb = new StringBuffer(firstLine);
-                        sb.append(YACConstants.LOG_ATTR_SEPRATOR);
-                        sb.append(attrs.get(0)).append(getTimeSuffix()).append(YACConstants.LOG_ATTR_SEPRATOR)
-                                .append(attrs.get(1)).append(YACConstants.LOG_ATTR_SEPRATOR)
-                                .append(attrs.get(2)).append(YACConstants.LOG_ATTR_SEPRATOR)
-                                .append(attrs.get(3)).append(YACConstants.LOG_ATTR_SEPRATOR)
-                                .append(attrs.get(4)).append(YACConstants.LOG_ATTR_SEPRATOR)
-                                .append(attrs.get(5)).append(YACConstants.LOG_ATTR_SEPRATOR);
-                        YACConstants.CONTENT_QUEUE.add(sb.toString());
-                    }else{
-                        if(attrs.get(1).length() < 500){
-                            LOG_INVALID.debug(attrs.get(1));
+                        if(DMUtils.validateURL(attrs.get(1))){
+                            //uid  ip nation ts url title 网站语言 metainfo 停留时间
+                            StringBuffer sb = new StringBuffer(firstLine);
+                            sb.append(YACConstants.LOG_ATTR_SEPRATOR);
+                            sb.append(attrs.get(0)).append(getTimeSuffix()).append(YACConstants.LOG_ATTR_SEPRATOR)
+                                    .append(attrs.get(1)).append(YACConstants.LOG_ATTR_SEPRATOR)
+                                    .append(attrs.get(2)).append(YACConstants.LOG_ATTR_SEPRATOR)
+                                    .append(attrs.get(3)).append(YACConstants.LOG_ATTR_SEPRATOR)
+                                    .append(attrs.get(4)).append(YACConstants.LOG_ATTR_SEPRATOR)
+                                    .append(attrs.get(5)).append(YACConstants.LOG_ATTR_SEPRATOR);
+                            YACConstants.CONTENT_QUEUE.add(sb.toString());
+                        }else{
+                            if(attrs.get(1).length() < 500){
+                                LOG_INVALID.debug(attrs.get(1));
+                            }
                         }
+                    }catch(Exception e){
+                        LOG.warn("Error while parse " + line + " : " + e.getMessage());
                     }
                 }
             }
