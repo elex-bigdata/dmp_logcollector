@@ -90,7 +90,7 @@ public class FormatYACLog implements Callable<String>{
         return "ok";
     }
 
-    public String unzipFile(String filePath) throws Exception{
+    public String unzipFile(String filePath){
 /*        ZipFile zipFile = new ZipFile(filePath);
         String zipFileName = zipFile.getFile().getName();
         String fileName = zipFileName.substring(0,zipFileName.indexOf("."));
@@ -101,13 +101,21 @@ public class FormatYACLog implements Callable<String>{
         }*/
 
         //API解压有问题，直接调用系统unzip
-        File zipFile = new File(filePath);
-        String fileName = zipFile.getName().substring(0, zipFile.getName().indexOf("."));
-        String fullDatPath = YACConstants.unzip_path+"/" + fileName + ".dat";
-        String shellCommand = "unzip -oqc "+ filePath +" > " + fullDatPath;
-        String[] cmd = {"/bin/sh", "-c", shellCommand};
-        Process pid = Runtime.getRuntime().exec(cmd);
-        pid.waitFor();
+
+        String fullDatPath = null;
+        try {
+            File zipFile = new File(filePath);
+            String fileName = zipFile.getName().substring(0, zipFile.getName().indexOf("."));
+            fullDatPath = YACConstants.unzip_path+"/" + fileName + ".dat";
+            String shellCommand = "unzip -oqc "+ filePath +" > " + fullDatPath;
+            String[] cmd = {"/bin/sh", "-c", shellCommand};
+            Process pid = Runtime.getRuntime().exec(cmd);
+            pid.waitFor();
+        } catch (Exception e) {
+            LOG.warn("Error while unzip " + zipfilePath + " " + e.getMessage()); //暂时不理会错误
+            new File(fullDatPath).delete();
+            fullDatPath = null;
+        }
 
         new File(filePath).delete(); //删除
         return fullDatPath;
