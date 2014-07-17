@@ -63,11 +63,11 @@ public class FormatYACLog implements Callable<String>{
                                     .append(attrs.get(4)).append(YACConstants.LOG_ATTR_SEPRATOR)
                                     .append(attrs.get(5)).append(YACConstants.LOG_ATTR_SEPRATOR);
                             YACConstants.CONTENT_QUEUE.add(sb.toString());
-                        }else{
+                        }/*else{
                             if(attrs.get(1).length() < 500){
                                 LOG_INVALID.debug(attrs.get(1));
                             }
-                        }
+                        }*/
                     }catch(Exception e){
                         LOG.warn("Error while parse " + line + " : " + e.getMessage());
                     }
