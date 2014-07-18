@@ -63,6 +63,9 @@ public class FormatYACLog implements Callable<String>{
                             if(index > -1){
                                 url = url.substring(0,index);
                             }
+                            if(url.length() >140){
+                                continue;
+                            }
 
                             sb.append(YACConstants.LOG_ATTR_SEPRATOR);
                             sb.append(attrs.get(0)).append(getTimeSuffix()).append(YACConstants.LOG_ATTR_SEPRATOR)
