@@ -52,12 +52,21 @@ public class FormatYACLog implements Callable<String>{
                         line =  line.replace(YACConstants.YAC_UNICODE, "");
                         List<String> attrs = DMUtils.split(line,YACConstants.LOG_ATTR_SEPRATOR);
 
-                        if(DMUtils.validateURL(attrs.get(1))){
+                        String url = attrs.get(1);
+                        if(DMUtils.validateURL(url)){
                             //uid  ip nation ts url title 网站语言 metainfo 停留时间
                             StringBuffer sb = new StringBuffer(firstLine);
+
+                            //只取到“?”之前的URL
+
+                            int index = url.indexOf("?") ;
+                            if(index > -1){
+                                url = url.substring(0,index);
+                            }
+
                             sb.append(YACConstants.LOG_ATTR_SEPRATOR);
                             sb.append(attrs.get(0)).append(getTimeSuffix()).append(YACConstants.LOG_ATTR_SEPRATOR)
-                                    .append(attrs.get(1)).append(YACConstants.LOG_ATTR_SEPRATOR)
+                                    .append(url).append(YACConstants.LOG_ATTR_SEPRATOR)
                                     .append(attrs.get(2)).append(YACConstants.LOG_ATTR_SEPRATOR)
                                     .append(attrs.get(3)).append(YACConstants.LOG_ATTR_SEPRATOR)
                                     .append(attrs.get(4)).append(YACConstants.LOG_ATTR_SEPRATOR)
