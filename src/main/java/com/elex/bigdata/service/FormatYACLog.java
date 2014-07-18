@@ -38,14 +38,22 @@ public class FormatYACLog implements Callable<String>{
         try{
             LOG.debug("Unzip file " + zipfilePath);
             String filePath = unzipFile(zipfilePath);
-            if(filePath == null){
-                return "error";
+            File datFile = new File(filePath);
+
+            if(!datFile.exists()){
+                return "null";
             }
+
+            if(datFile.length() == 0){
+                datFile.delete();
+                return "zero";
+            }
+
             //parseFile
             fis = new FileInputStream(filePath);
             reader = new BufferedReader(new InputStreamReader(fis));
 
-            String firstLine = reader.readLine().replace(YACConstants.YAC_UNICODE,"");
+            String firstLine = reader.readLine().replace(YACConstants.YAC_UNICODE, "");
             String line = null;
 
             while((line =  reader.readLine()) != null){
@@ -133,8 +141,6 @@ public class FormatYACLog implements Callable<String>{
                 }
                 if(retry == 0 || !e.getMessage().contains("error=11")){
                     LOG.warn("Error while unzip " + zipfilePath + " " + e.getMessage());
-                    new File(fullDatPath).delete();
-                    fullDatPath = null;
                     break;
                 }
             }
