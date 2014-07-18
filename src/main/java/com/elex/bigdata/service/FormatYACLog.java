@@ -75,7 +75,7 @@ public class FormatYACLog implements Callable<String>{
                             if(index > -1){
                                 url = url.substring(0,index);
                             }
-                            if(url.length() >140){
+                            if(url.length() >100){
                                 continue;
                             }
 
