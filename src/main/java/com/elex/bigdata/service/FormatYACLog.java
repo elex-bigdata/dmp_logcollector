@@ -133,29 +133,23 @@ public class FormatYACLog implements Callable<String>{
         fullDatPath = YACConstants.unzip_path+"/" + fileName + ".dat";
         String shellCommand = "unzip -oqc "+ filePath +" > " + fullDatPath;
         String[] cmd = {"/bin/sh", "-c", shellCommand};
-//        while(retry >0){
-            try {
-                Process pid = Runtime.getRuntime().exec(cmd);
-                pid.waitFor();
-                new File(filePath).delete(); //删除
-            } catch (Exception e) {
+
+        try {
+            Process pid = Runtime.getRuntime().exec(cmd);
+            pid.waitFor();
+            new File(filePath).delete(); //删除
+        } catch (Exception e) {
 //                retry--;
-                 if(e.getMessage().contains("error=11")){
-                     YACConstants.FILENAME_QUEUE.add(filePath);
-                 }else{
-                     LOG.warn("Error while unzip " + zipfilePath + " " + e.getMessage());
-                     new File(filePath).delete(); //删除
-                 }
+             if(e.getMessage().contains("unavailable")){
+                 YACConstants.FILENAME_QUEUE.add(filePath);
+             }else{
+                 LOG.warn("Error while unzip " + zipfilePath + " " + e.getMessage());
+                 new File(filePath).delete(); //删除
+             }
 
-/*                if(retry == 0){
-                    LOG.warn("Error while unzip " + zipfilePath + " " + e.getMessage());
-                    break;
-                }*/
 
-            }
-//        }
+        }
 
-        //new File(filePath).delete(); //删除
         return fullDatPath;
     }
 
