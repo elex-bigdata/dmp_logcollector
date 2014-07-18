@@ -137,10 +137,10 @@ public class FormatYACLog implements Callable<String>{
                 Process pid = Runtime.getRuntime().exec(cmd);
                 pid.waitFor();
             } catch (Exception e) {
+                retry--;
                 if(e.getMessage().contains("error=11")){
-                    retry--;
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     } catch (InterruptedException e1) {
                         e1.printStackTrace();
                     }

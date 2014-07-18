@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class CheckYacZipFile implements Runnable {
 
-    private ExecutorService service = new ThreadPoolExecutor(5,100,60, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
+    private ExecutorService service = new ThreadPoolExecutor(10,300,60, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
 
     @Override
     public void run() {
