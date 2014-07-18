@@ -139,17 +139,9 @@ public class FormatYACLog implements Callable<String>{
             pid.waitFor();
             new File(filePath).delete(); //删除
         } catch (Exception e) {
-//                retry--;
-             if(e.getMessage().contains("unavailable")){
-                 YACConstants.FILENAME_QUEUE.add(filePath);
-             }else{
-                 LOG.warn("Error while unzip " + zipfilePath + " " + e.getMessage());
-                 new File(filePath).delete(); //删除
-             }
-
-
+            LOG.warn("Error while unzip " + zipfilePath + " " + e.getMessage());
         }
-
+        new File(filePath).delete(); //删除
         return fullDatPath;
     }
 
