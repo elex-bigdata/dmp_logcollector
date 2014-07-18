@@ -38,7 +38,9 @@ public class FormatYACLog implements Callable<String>{
         try{
             LOG.debug("Unzip file " + zipfilePath);
             String filePath = unzipFile(zipfilePath);
-
+            if(filePath == null){
+                return "error";
+            }
             //parseFile
             fis = new FileInputStream(filePath);
             reader = new BufferedReader(new InputStreamReader(fis));
@@ -85,10 +87,10 @@ public class FormatYACLog implements Callable<String>{
                     }
                 }
             }
-            LOG.debug("Delete file " + filePath);
+//            LOG.debug("Delete file " + filePath);
             new File(filePath).delete();
         }catch (Exception e){
-            LOG.warn("Error while process " + zipfilePath + " " + e.getMessage()); //暂时不理会错误
+            LOG.warn("Error while process " + zipfilePath + " " + e.getMessage());
             return "fail";
         }finally {
             if(reader != null){
@@ -115,18 +117,27 @@ public class FormatYACLog implements Callable<String>{
         //API解压有问题，直接调用系统unzip
 
         String fullDatPath = null;
-        try {
-            File zipFile = new File(filePath);
-            String fileName = zipFile.getName().substring(0, zipFile.getName().indexOf("."));
-            fullDatPath = YACConstants.unzip_path+"/" + fileName + ".dat";
-            String shellCommand = "unzip -oqc "+ filePath +" > " + fullDatPath;
-            String[] cmd = {"/bin/sh", "-c", shellCommand};
-            Process pid = Runtime.getRuntime().exec(cmd);
-            pid.waitFor();
-        } catch (Exception e) {
-            LOG.warn("Error while unzip " + zipfilePath + " " + e.getMessage()); //暂时不理会错误
-            new File(fullDatPath).delete();
-            fullDatPath = null;
+        int retry = 4;
+        File zipFile = new File(filePath);
+        String fileName = zipFile.getName().substring(0, zipFile.getName().indexOf("."));
+        fullDatPath = YACConstants.unzip_path+"/" + fileName + ".dat";
+        String shellCommand = "unzip -oqc "+ filePath +" > " + fullDatPath;
+        String[] cmd = {"/bin/sh", "-c", shellCommand};
+        while(retry >0){
+            try {
+                Process pid = Runtime.getRuntime().exec(cmd);
+                pid.waitFor();
+            } catch (Exception e) {
+                if(e.getMessage().contains("error=11")){
+                    retry--;
+                }
+                if(retry == 0 || !e.getMessage().contains("error=11")){
+                    LOG.warn("Error while unzip " + zipfilePath + " " + e.getMessage());
+                    new File(fullDatPath).delete();
+                    fullDatPath = null;
+                    break;
+                }
+            }
         }
 
         new File(filePath).delete(); //删除
