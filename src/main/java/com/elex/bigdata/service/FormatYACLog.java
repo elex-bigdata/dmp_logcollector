@@ -138,6 +138,11 @@ public class FormatYACLog implements Callable<String>{
             } catch (Exception e) {
                 if(e.getMessage().contains("error=11")){
                     retry--;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
                 }
                 if(retry == 0 || !e.getMessage().contains("error=11")){
                     LOG.warn("Error while unzip " + zipfilePath + " " + e.getMessage());
