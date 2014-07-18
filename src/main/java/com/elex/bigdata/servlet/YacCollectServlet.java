@@ -71,7 +71,7 @@ public class YacCollectServlet extends HttpServlet {
 
                     String value = item.getName() ;
                     int prefix = random.nextInt(9999);
-                    String filename = prefix + "_" + value.substring(value.lastIndexOf("\\")+1);
+                    String filename = prefix + "_" + value.substring(value.lastIndexOf("\\")+1); //解决重名
 
                     String sed = decode.substring(decode.length() - 4);
                     LOG.debug("filename : " + filename + "， IP : " + ip + "， Seed : " + sed + ", size :" + item.getSize());
@@ -93,6 +93,7 @@ public class YacCollectServlet extends HttpServlet {
                     }
 
                     in.close();
+                    out.flush();
                     out.close();
                     YACConstants.FILENAME_QUEUE.add(path + "/" + filename);
                 }

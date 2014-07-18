@@ -45,6 +45,7 @@ public class FormatYACLog implements Callable<String>{
             }
 
             if(datFile.length() == 0){
+                LOG.warn("Error " + zipfilePath + " length is zero");
                 datFile.delete();
                 return "zero";
             }
