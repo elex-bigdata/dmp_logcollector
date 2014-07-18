@@ -137,17 +137,25 @@ public class FormatYACLog implements Callable<String>{
             try {
                 Process pid = Runtime.getRuntime().exec(cmd);
                 pid.waitFor();
+                new File(filePath).delete(); //删除
             } catch (Exception e) {
 //                retry--;
-                LOG.warn("Error while unzip " + zipfilePath + " " + e.getMessage());
+                 if(e.getMessage().contains("error=11")){
+                     YACConstants.FILENAME_QUEUE.add(filePath);
+                 }else{
+                     LOG.warn("Error while unzip " + zipfilePath + " " + e.getMessage());
+                     new File(filePath).delete(); //删除
+                 }
+
 /*                if(retry == 0){
                     LOG.warn("Error while unzip " + zipfilePath + " " + e.getMessage());
                     break;
                 }*/
+
             }
 //        }
 
-        new File(filePath).delete(); //删除
+        //new File(filePath).delete(); //删除
         return fullDatPath;
     }
 
