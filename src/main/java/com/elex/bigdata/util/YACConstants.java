@@ -15,10 +15,10 @@ public class YACConstants {
 
     public static BlockingQueue<String> CONTENT_QUEUE = new LinkedBlockingQueue<String>();
 
-    public static final String unzip_path = "/data/log/yac/dat";
-    public static final String upload_dir_path = "/data/log/yac/zip";
+    public static final String unzip_path = "/data0/log/yac/dat";
+    public static final String upload_dir_path = "/data0/log/yac/zip";
 
-    public static final String log_dir_path = "/data/log/yac/";
+    public static final String log_dir_path = "/data0/log/yac/";
 
     public static final String url_filter_keywords = "callback=|\\.xml|=http|=www|video|img|static|amasvc|google|youtube|google-analytics|googlebanner|ad\\.|ads|ad2|\\.ad|192\\.168\\.|\\.ytimg\\.com|ajax|api|image|favicon|\\.doubleclick|s\\.youtube\\.com|&async=|=async&|livetr\\.gostream\\.nl|script|---|___|/cdn|cdn\\.|\\.virgul\\.com|adserver|yandex\\.|graph\\.facebook\\.com|my\\.mail|redtube\\.com";
     public static final String url_filter_suffix = "gif|GIF|jpg|JPG|png|PNG|ico|ICO|css|flv|CSS|sit|SIT|eps|EPS|wmf|WMF|zip|ZIP|ppt|PPT|mpg|MPG|xls|XLS|gz|GZ|rpm|RPM|tgz|TGZ|mov|MOV|exe|EXE|jpeg|JPEG|bmp|BMP|js|JS|jxr|f3d|woff|svg|AMF|amf|ttf|swf|txt|mp3";
