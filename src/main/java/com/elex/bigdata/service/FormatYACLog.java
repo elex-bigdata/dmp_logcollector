@@ -27,7 +27,6 @@ public class FormatYACLog implements Callable<String>{
     private String zipfilePath;
 
     public FormatYACLog(String zipfilePath){
-        LOG_INVALID.info(zipfilePath);
         this.zipfilePath = zipfilePath;
     }
 
