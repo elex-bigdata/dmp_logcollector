@@ -43,6 +43,10 @@ public class DMUtils {
         return YACConstants.AMAZON_VIEWPRODUCT_PATTERN.matcher(url).matches() ;
     }
 
+    public static boolean isEbayVP(String url) { //EBAY商品浏览
+        return YACConstants.EBAY_VIEWPRODUCT_PATTERN.matcher(url).matches() ;
+    }
+
     public static List<String> split(String line, String sep) {
         List<String> attrs = new ArrayList<String>();
         int pos = 0, end;

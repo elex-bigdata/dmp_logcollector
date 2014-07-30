@@ -22,6 +22,7 @@ import java.util.concurrent.Callable;
 public class FormatYACLog implements Callable<String>{
     public static final Log LOG = LogFactory.getLog(FormatYACLog.class);
     public static final Log LOG_AMAZON = LogFactory.getLog("amazon");
+    public static final Log LOG_EBAY = LogFactory.getLog("ebay");
     private static Random random = new Random();
     private String zipfilePath;
 
@@ -71,6 +72,11 @@ public class FormatYACLog implements Callable<String>{
                             if(DMUtils.isAmazonVP(url)){
                                 String uid = firstLine.substring(0,firstLine.indexOf(YACConstants.LOG_ATTR_SEPRATOR));
                                 LOG_AMAZON.info(uid+YACConstants.LOG_ATTR_SEPRATOR + attrs.get(0) + timeSuffix + YACConstants.LOG_ATTR_SEPRATOR + url);
+                            }
+
+                            if(DMUtils.isEbayVP(url)){
+                                String uid = firstLine.substring(0,firstLine.indexOf(YACConstants.LOG_ATTR_SEPRATOR));
+                                LOG_EBAY.info(uid+YACConstants.LOG_ATTR_SEPRATOR + attrs.get(0) + timeSuffix + YACConstants.LOG_ATTR_SEPRATOR + url);
                             }
 
                             //只取到“?”之前的URL

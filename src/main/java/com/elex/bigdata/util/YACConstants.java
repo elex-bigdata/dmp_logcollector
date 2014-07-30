@@ -25,12 +25,14 @@ public class YACConstants {
     public static final String url_filter_suffix = "gif|GIF|jpg|JPG|png|PNG|ico|ICO|css|flv|CSS|sit|SIT|eps|EPS|wmf|WMF|zip|ZIP|ppt|PPT|mpg|MPG|xls|XLS|gz|GZ|rpm|RPM|tgz|TGZ|mov|MOV|exe|EXE|jpeg|JPEG|bmp|BMP|js|JS|jxr|f3d|woff|svg|AMF|amf|ttf|swf|txt|mp3";
 
     public static final String amazon_view_product_reg = "http://www.amazon.com/[a-zA-Z0-9\\-]+/dp/.*";
+    public static final String ebay_view_product_reg = "http://www.ebay.com/itm/[a-zA-Z0-9\\-]+/.*";
 
     public static String URL_FILTER_REG = ".*(("+url_filter_keywords+")|(/"+url_filter_suffix+")|(\\.("+url_filter_suffix+"))).*";
 //    public static String URL_FILTER_REG = ".*\\.("+url_filter_suffix+")(\\?.+|$)";
 
     public static Pattern URL_FILTER_PATTERN = Pattern.compile(URL_FILTER_REG);
     public static Pattern AMAZON_VIEWPRODUCT_PATTERN = Pattern.compile(amazon_view_product_reg);
+    public static Pattern EBAY_VIEWPRODUCT_PATTERN = Pattern.compile(ebay_view_product_reg);
 
     public static String YAC_UNICODE = "\u0000";
     public static final String LOG_ATTR_SEPRATOR = "\t";
