@@ -21,8 +21,7 @@ import java.util.concurrent.Callable;
  */
 public class FormatYACLog implements Callable<String>{
     public static final Log LOG = LogFactory.getLog(FormatYACLog.class);
-    public static final Log LOG_INVALID = LogFactory.getLog("invalid_url");
-    public static final Log LOG_DOUBT = LogFactory.getLog("doubt_url");
+    public static final Log LOG_AMAZON = LogFactory.getLog("amazon");
     private static Random random = new Random();
     private String zipfilePath;
 
@@ -67,6 +66,10 @@ public class FormatYACLog implements Callable<String>{
                         if(DMUtils.validateURL(url)){
                             //uid  ip nation ts url title 网站语言 metainfo 停留时间
                             StringBuffer sb = new StringBuffer(firstLine);
+
+                            if(DMUtils.isAmazonVP(url)){
+                                LOG_AMAZON.info(url);
+                            }
 
                             //只取到“?”之前的URL
 

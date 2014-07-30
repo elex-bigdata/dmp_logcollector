@@ -39,6 +39,10 @@ public class DMUtils {
         return !YACConstants.URL_DOUBT_PATTERN.matcher(url).matches() ;
     }
 
+    public static boolean isAmazonVP(String url) { //亚马逊商品浏览
+        return YACConstants.AMAZON_VIEWPRODUCT_PATTERN.matcher(url).matches() ;
+    }
+
     public static List<String> split(String line, String sep) {
         List<String> attrs = new ArrayList<String>();
         int pos = 0, end;
