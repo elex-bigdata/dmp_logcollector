@@ -67,8 +67,10 @@ public class FormatYACLog implements Callable<String>{
                             //uid  ip nation ts url title 网站语言 metainfo 停留时间
                             StringBuffer sb = new StringBuffer(firstLine);
 
+                            String timeSuffix = getTimeSuffix();
                             if(DMUtils.isAmazonVP(url)){
-                                LOG_AMAZON.info(url);
+                                String uid = firstLine.substring(0,firstLine.indexOf(YACConstants.LOG_ATTR_SEPRATOR));
+                                LOG_AMAZON.info(uid+YACConstants.LOG_ATTR_SEPRATOR + attrs.get(0) + timeSuffix + YACConstants.LOG_ATTR_SEPRATOR + url);
                             }
 
                             //只取到“?”之前的URL
@@ -82,7 +84,7 @@ public class FormatYACLog implements Callable<String>{
                             }
 
                             sb.append(YACConstants.LOG_ATTR_SEPRATOR);
-                            sb.append(attrs.get(0)).append(getTimeSuffix()).append(YACConstants.LOG_ATTR_SEPRATOR)
+                            sb.append(attrs.get(0)).append(timeSuffix).append(YACConstants.LOG_ATTR_SEPRATOR)
                                     .append(url).append(YACConstants.LOG_ATTR_SEPRATOR)
                                     .append(attrs.get(2)).append(YACConstants.LOG_ATTR_SEPRATOR)
                                     .append(attrs.get(3)).append(YACConstants.LOG_ATTR_SEPRATOR)
