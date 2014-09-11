@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -68,15 +70,15 @@ public class FormatYACLog implements Callable<String>{
                             //uid  ip nation ts url title 网站语言 metainfo 停留时间
                             StringBuffer sb = new StringBuffer(firstLine);
 
-                            String timeSuffix = getTimeSuffix();
+                            String time = correctTime(attrs.get(0));
                             if(DMUtils.isAmazonVP(url)){
                                 String uid = firstLine.substring(0,firstLine.indexOf(YACConstants.LOG_ATTR_SEPRATOR));
-                                LOG_AMAZON.info(uid+YACConstants.LOG_ATTR_SEPRATOR + attrs.get(0) + timeSuffix + YACConstants.LOG_ATTR_SEPRATOR + url);
+                                LOG_AMAZON.info(uid+YACConstants.LOG_ATTR_SEPRATOR + time + YACConstants.LOG_ATTR_SEPRATOR + url);
                             }
 
                             if(DMUtils.isEbayVP(url)){
                                 String uid = firstLine.substring(0,firstLine.indexOf(YACConstants.LOG_ATTR_SEPRATOR));
-                                LOG_EBAY.info(uid+YACConstants.LOG_ATTR_SEPRATOR + attrs.get(0) + timeSuffix + YACConstants.LOG_ATTR_SEPRATOR + url);
+                                LOG_EBAY.info(uid+YACConstants.LOG_ATTR_SEPRATOR + time + YACConstants.LOG_ATTR_SEPRATOR + url);
                             }
 
                             //只取到“?”之前的URL
@@ -90,7 +92,7 @@ public class FormatYACLog implements Callable<String>{
                             }
 
                             sb.append(YACConstants.LOG_ATTR_SEPRATOR);
-                            sb.append(attrs.get(0)).append(timeSuffix).append(YACConstants.LOG_ATTR_SEPRATOR)
+                            sb.append(time).append(YACConstants.LOG_ATTR_SEPRATOR)
                                     .append(url).append(YACConstants.LOG_ATTR_SEPRATOR)
                                     .append(attrs.get(2)).append(YACConstants.LOG_ATTR_SEPRATOR)
                                     .append(attrs.get(3)).append(YACConstants.LOG_ATTR_SEPRATOR)
@@ -167,5 +169,30 @@ public class FormatYACLog implements Callable<String>{
             timeSuffix = "0" + randomTime;
         }
         return timeSuffix;
+    }
+
+    //yac的时间为用户本机时间，与实际时间差别较大，如果差一天，简单处理为设置为当天
+    public String correctTime(String ts){
+        long t = Long.parseLong(ts + getTimeSuffix());
+        Calendar time = Calendar.getInstance();
+        time.setTimeInMillis(t);
+        int hour = time.get(Calendar.HOUR_OF_DAY);
+        int min = time.get(Calendar.MINUTE);
+        int sec = time.get(Calendar.SECOND);
+        int msec = time.get(Calendar.MILLISECOND);
+
+        time.setTime(new Date());
+
+        if(Math.abs(time.getTimeInMillis() - t) > YACConstants.valid_date_range){
+            if(hour < time.get(Calendar.HOUR_OF_DAY)){
+                time.set(Calendar.HOUR_OF_DAY, hour);
+            }
+            time.set(Calendar.MINUTE, min);
+            time.set(Calendar.SECOND, sec);
+            time.set(Calendar.MILLISECOND, msec);
+            t = time.getTimeInMillis();
+        }
+
+        return String.valueOf(t);
     }
 }

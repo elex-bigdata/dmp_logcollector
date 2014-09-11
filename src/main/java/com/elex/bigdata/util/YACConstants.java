@@ -39,4 +39,6 @@ public class YACConstants {
 
     public static String url_doubt_keywords = "ad\\.|ads\\.|ad2\\.|\\.ad|image";
     public static Pattern URL_DOUBT_PATTERN = Pattern.compile(".*("+url_doubt_keywords+").*");
+
+    public static long valid_date_range = 1*24*60*60*1000;
 }
